@@ -153,7 +153,7 @@ const ItemsRenderer = ({
 
       {type === "content" && (
         <div
-          className={`p-2 border text-center h-full border-dashed flex justify-center items-center ${
+          className={`p-2 border text-center h-full border-dashed  ${
             activeId === id && "border-2 border-green-500"
           } ${SpanRow(Number(rowspan))} ${SpanCol(
             Number(colspan)
