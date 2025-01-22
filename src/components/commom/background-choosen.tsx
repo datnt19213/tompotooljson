@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ToastError, ToastSuccess } from "../toast";
-import { setData } from "../../store/DndSlice";
 
 interface ModalBgProps {
     setModalBackground: (value: boolean) => void;

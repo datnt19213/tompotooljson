@@ -3,10 +3,14 @@ import { IDocument } from "./type";
 
 interface IDocumentSlice {
   activeDocument: IDocument | null;
+  documentName: string;
+  uid: string;
 }
 
 const initialState: IDocumentSlice = {
   activeDocument: null,
+  documentName: "",
+  uid: "",
 };
 
 export const DocumentSlice = createSlice({
@@ -21,9 +25,15 @@ export const DocumentSlice = createSlice({
     ) => {
       state.activeDocument = action.payload;
     },
+    setDocumentName: (state, action) => {
+      state.documentName = action.payload;
+    },
+    setUID: (state, action) => {
+      state.uid = action.payload;
+    },
   },
 });
 
-export const { setActiveDocument } = DocumentSlice.actions;
+export const { setActiveDocument, setDocumentName, setUID } = DocumentSlice.actions;
 
 export default DocumentSlice.reducer;

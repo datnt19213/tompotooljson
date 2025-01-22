@@ -1,16 +1,24 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {getUniqueContentItems} from "../utilities";
-import {sample_data} from "../config/common";
+import { createSlice } from "@reduxjs/toolkit";
+import { getUniqueContentItems } from "../utilities";
+import { sample_data } from "../config/common";
+import { defaultCode } from "../components/monacoEditor/const";
 
 export interface DndState {
   activeId: string | null;
   activeData: any | null;
-  data: Obj;
+  data: {
+    mobile: Obj;
+    desktop: Obj;
+  };
   sidebar: any[];
   properties: Properties;
   deepLevel: number;
   thumbnail: string;
   lockScroll: boolean;
+  activeCreateFunction: boolean;
+  dataComponent: string;
+  loadingMonacoEditor: boolean;
+  layoutTypeScreen: string;
 }
 
 interface Properties {
@@ -29,6 +37,10 @@ interface Properties {
   alignItems: "center" | "flex-start" | "flex-end" | "stretch" | "baseline";
   style?: React.CSSProperties;
   thumbnail?: string;
+  dataSlice: {
+    title?: string;
+    url?: string;
+  };
 }
 
 export interface Obj {
@@ -44,26 +56,40 @@ export interface Obj {
   style?: React.CSSProperties;
   childs: Obj[];
   thumbnail?: string;
+  dataSlice: {
+    title?: string;
+    url?: string;
+  };
 }
 
+const initialData = {
+  id: "root",
+  thumbnail: "",
+  type: "grid",
+  columns: "1",
+  gap: "1",
+  rows: "1",
+  colspan: "1",
+  rowspan: "1",
+  alignItems: "flex-start",
+  justifyContent: "flex-start",
+  style: {},
+  childs: [],
+  dataSlice: {
+    title: "",
+    url: "",
+  },
+  layoutTypeScreen: "desktop",
+};
+
 const initialState: DndState = {
-  thumbnail: "_",
+  thumbnail: "",
   lockScroll: false,
   activeId: null,
   activeData: null,
   data: {
-    id: "root",
-    thumbnail: "_",
-    type: "grid",
-    columns: "1",
-    gap: "1",
-    rows: "1",
-    colspan: "1",
-    rowspan: "1",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    style: {},
-    childs: [],
+    mobile: initialData,
+    desktop: initialData,
   },
   // sidebar: sample_data.childs,
   sidebar: [],
@@ -76,9 +102,14 @@ const initialState: DndState = {
     alignItems: "flex-start",
     justifyContent: "flex-start",
     style: {},
-    thumbnail: "_",
+    thumbnail: "",
+    dataSlice: {},
   },
   deepLevel: 1,
+  activeCreateFunction: false,
+  dataComponent: defaultCode,
+  loadingMonacoEditor: false,
+  layoutTypeScreen: "desktop",
 };
 
 const updateItem = (
@@ -94,7 +125,7 @@ const updateItem = (
     return data;
   }
 
-  const updatedChilds = data.childs.map(child =>
+  const updatedChilds = data.childs.map((child) =>
     updateItem(child, id, updatedValues)
   );
 
@@ -115,8 +146,12 @@ export const dndSlice = createSlice({
     setActiveData: (state, action) => {
       state.activeData = action.payload;
     },
-    setData: (state, action) => {
+    setDataFetchData: (state, action) => {
       state.data = action.payload;
+    },
+    setData: (state, action) => {
+      const layoutType = state.layoutTypeScreen || "desktop";
+      state.data[layoutType] = action.payload;
     },
     setSidebar: (state, action) => {
       state.sidebar = action.payload;
@@ -133,6 +168,18 @@ export const dndSlice = createSlice({
     setScrollLock: (state, action) => {
       state.lockScroll = action.payload;
     },
+    setLoadingMonacoEditor: (state, action) => {
+      state.loadingMonacoEditor = action.payload;
+    },
+    setDataComponent: (state, action) => {
+      state.dataComponent = action.payload;
+    },
+    setActiveCreateFunction: (state, action) => {
+      state.activeCreateFunction = action.payload;
+    },
+    setLayoutTypeScreen: (state, action) => {
+      state.layoutTypeScreen = action.payload;
+    },
   },
 });
 
@@ -145,6 +192,11 @@ export const {
   setProperties,
   setDeepLevel,
   setScrollLock,
+  setDataComponent,
+  setActiveCreateFunction,
+  setLoadingMonacoEditor,
+  setLayoutTypeScreen,
+  setDataFetchData,
 } = dndSlice.actions;
 
 export default dndSlice.reducer;

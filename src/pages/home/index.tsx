@@ -103,7 +103,7 @@ const HomePage = () => {
     const formData = {
       projectId: projectId.trim(),
       projectName: projectName,
-      thumbnail: "___",
+      thumbnail: "",
       websiteUrl: websiteUrl.trim(),
       projectUrl: projectUrl.trim(),
     };

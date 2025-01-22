@@ -2,7 +2,7 @@ export interface IDocument {
   _id: string;
   projectId: string;
   documentId: string;
-  documentName: string;
+  documentUID: string;
   layoutJson: string;
   createdAt: string;
   updatedAt: string;

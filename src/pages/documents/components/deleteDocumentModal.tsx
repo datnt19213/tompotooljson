@@ -6,6 +6,7 @@ import { deleteDocument } from "../../../services/documents/api";
 import { setTriggerFetchListDocument } from "../../../store/global/globalSlice";
 import { IDocument } from "../../../store/documents/type";
 import { useState } from "react";
+import _ from "lodash";
 
 type ResponsiveModalDrawerType = {
   document: IDocument;
@@ -50,7 +51,7 @@ export const DeleteDocumentModal = (props: ResponsiveModalDrawerType) => {
       <h2 className="text-lg font-normal">
         Are you sure, you want to delete document{" "}
         <span className="font-bold">
-          "{documentState?.activeDocument?.documentName || ""}"
+          "{_.get(documentState, "activeDocument.documentName") || ""}"
         </span>
       </h2>
     </ResponsiveModalDrawer>

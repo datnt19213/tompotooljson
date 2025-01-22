@@ -1,8 +1,8 @@
-import {configureStore} from "@reduxjs/toolkit";
-import {dndSlice} from "./DndSlice";
-import {DocumentSlice} from "./documents/documentSlice";
-import {GlobalSlice} from "./global/globalSlice";
-import {projectsSlice} from "./ProjectSlice";
+import { configureStore } from "@reduxjs/toolkit";
+import { dndSlice } from "./DndSlice";
+import { DocumentSlice } from "./documents/documentSlice";
+import { GlobalSlice } from "./global/globalSlice";
+import { projectsSlice } from "./ProjectSlice";
 
 export const store = configureStore({
   reducer: {

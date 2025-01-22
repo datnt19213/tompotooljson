@@ -38,15 +38,15 @@ const RootProvider: FC<RootProviderProps> = ({ routers }) => {
         <Routes>
           <Route element={<Middleware />}>
             {routers.map((route, index) => {
-              if (route.requiresAuth && !isAuthenticated) {
-                return (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    element={<Navigate to="/login" replace />}
-                  />
-                );
-              }
+              // if (route.requiresAuth && !isAuthenticated) {
+              //   return (
+              //     <Route
+              //       key={index}
+              //       path={route.path}
+              //       element={<Navigate to="/login" replace />}
+              //     />
+              //   );
+              // }
 
               return (
                 <Route key={index} path={route.path} element={route.element} />

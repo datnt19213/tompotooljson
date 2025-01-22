@@ -1,9 +1,9 @@
 // Droppable component
-import {useDroppable} from "@dnd-kit/core";
-import {ReactNode, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../store";
-import {setActiveId} from "../../store/DndSlice";
+import { useDroppable } from "@dnd-kit/core";
+import { ReactNode, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { setActiveId } from "../../store/DndSlice";
 
 const Droppable = ({
   id,
@@ -19,6 +19,7 @@ const Droppable = ({
   children,
   className = "",
   thumbnail = "",
+  dataSlice,
 }: {
   id: string;
   columns: string;
@@ -33,6 +34,10 @@ const Droppable = ({
   className?: string;
   children: ReactNode;
   thumbnail?: string;
+  dataSlice?: {
+    title?: string;
+    url?: string;
+  };
 }) => {
   const { isOver, setNodeRef } = useDroppable({
     id,
@@ -47,6 +52,7 @@ const Droppable = ({
       alignItems,
       justifyContent,
       thumbnail,
+      dataSlice,
     },
   });
 
@@ -55,23 +61,19 @@ const Droppable = ({
   );
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log(" active data: " + activeId);
-    console.log(" active data: " + JSON.stringify(activeData));
-  }, [activeData, activeId]);
-
   return (
     <div
       ref={setNodeRef}
-      onDragOver={e => e.preventDefault()}
+      onDragOver={(e) => e.preventDefault()}
       className={`${className} ${
         isOver ? "border-red-400" : "border-gray-400"
       } p-2 z-[9999]`}
-      onClick={event => {
+      onClick={(event) => {
         event.stopPropagation();
         event.preventDefault();
         dispatch(setActiveId(id));
-      }}>
+      }}
+    >
       {children}
     </div>
   );
